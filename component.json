@@ -26,6 +26,14 @@
             "metadata": {
                 "in": "./schemas/createDeal.in.json",
                 "out": "./schemas/createDeal.out.json"
+            },
+            "fields": {
+                "deal_note": {
+                    "viewClass": "TextFieldView",
+                    "label": "Deal note",
+                    "required": true,
+                    "placeholder": "The note which is attached to the deal created."
+                }
             }
         }
     }

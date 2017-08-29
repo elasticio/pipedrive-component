@@ -54,7 +54,8 @@ describe("createDeal()", () => {
 
     const config = {
         company_domain: "aperture",
-        token: "i-am-real-token-yes"
+        token: "i-am-real-token-yes",
+        deal_note: "Just a simple note."
     } as CreateDealConfig;
 
     var self = this;
