@@ -1,4 +1,5 @@
 import { Visibility, Done, Status } from "../models/enums";
+import { CustomField } from "../models/customField";
 
 // owner_id and user_id are fully optional
 //  when owner_id not specified authenticated user is set as owner
@@ -32,4 +33,5 @@ export class PipedriveMessage {
     person_visible_to: Visibility;
     person_add_time: string;
     owner_id: number;
+    custom_fields: CustomField[];
 }
