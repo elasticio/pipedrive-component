@@ -17,8 +17,7 @@
             "type": "string"
         },
         "deal_title": {
-            "type": "string",
-            "required": true
+            "type": "string"
         },
         "deal_value": {
             "type": "string"
@@ -63,7 +62,8 @@
             "type": "string"
         },
         "org_name": {
-            "type": "string"
+            "type": "string",
+            "required": true
         },
         "org_visible_to": {
             "type": "string"

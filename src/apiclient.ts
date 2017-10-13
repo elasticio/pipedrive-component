@@ -5,6 +5,7 @@ import { Deal } from './models/deal';
 import { Note } from './models/note';
 import { Organization } from './models/organization';
 import { Person } from './models/person';
+import { Activity } from './models/activity';
 
 export interface APIResult {
     success: boolean;
@@ -36,6 +37,10 @@ export class APIClient {
 
     async createPerson(person: Person) {
         return this.create<Person>(person, "persons");
+    }
+
+    async createActivity(activity: Activity) {
+        return this.create<Activity>(activity, "activities");
     }
 
     private async create<T>(payload: T, endpointName: string): Promise<T> {

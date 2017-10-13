@@ -17,8 +17,7 @@
             "type": "string"
         },
         "deal_title": {
-            "type": "string",
-            "required": true
+            "type": "string"
         },
         "deal_value": {
             "type": "string"

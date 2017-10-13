@@ -21,11 +21,78 @@
     "triggers": {},
     "actions": {
         "createDeal": {
-            "title": "Create a new deal in pipdrive",
+            "title": "Create a new deal in pipedrive",
             "main": "./lib/actions/createDeal.js",
             "metadata": {
                 "in": "./schemas/createDeal.in.json",
-                "out": "./schemas/createDeal.out.json"
+                "out": "./schemas/common.out.json"
+            },
+            "fields": {
+                "owner_id": {
+                    "viewClass": "TextFieldView",
+                    "label": "Owner id",
+                    "placeholder": "Target pipedrive user id to override the default behaviour."
+                }
+            }
+        },
+        "createActivity": {
+            "title": "Create a new activity in pipedrive",
+            "main": "./lib/actions/createDeal.js",
+            "metadata": {
+                "in": "./schemas/createDeal.in.json",
+                "out": "./schemas/common.out.json"
+            },
+            "fields": {
+                "owner_id": {
+                    "viewClass": "TextFieldView",
+                    "label": "Owner id",
+                    "placeholder": "Target pipedrive user id to override the default behaviour."
+                }
+            }
+        },
+        "createNote": {
+            "title": "Create a new note in pipedrive",
+            "main": "./lib/actions/createNote.js",
+            "metadata": {
+                "in": "./schemas/createNote.in.json",
+                "out": "./schemas/common.out.json"
+            },
+            "fields": {
+                "deal_note": {
+                    "viewClass": "TextFieldView",
+                    "label": "Deal note",
+                    "placeholder": "A fixed header for the note which is attached to the deal created."
+                }
+            }
+        },
+        "createOrganisation": {
+            "title": "Create a new organisation in pipedrive",
+            "main": "./lib/actions/createOrganisation.js",
+            "metadata": {
+                "in": "./schemas/createOrganisation.in.json",
+                "out": "./schemas/common.out.json"
+            },
+            "fields": {
+                "owner_id": {
+                    "viewClass": "TextFieldView",
+                    "label": "Owner id",
+                    "placeholder": "Target pipedrive user id to override the default behaviour."
+                }
+            }
+        },
+        "createPerson": {
+            "title": "Create a new person in pipedrive",
+            "main": "./lib/actions/createPerson.js",
+            "metadata": {
+                "in": "./schemas/createPerson.in.json",
+                "out": "./schemas/common.out.json"
+            },
+            "fields": {
+                "owner_id": {
+                    "viewClass": "TextFieldView",
+                    "label": "Owner id",
+                    "placeholder": "Target pipedrive user id to override the default behaviour."
+                }
             }
         }
     }

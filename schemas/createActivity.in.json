@@ -5,20 +5,21 @@
             "type": "number"
         },
         "activity_subject": {
-            "type": "string"
+            "type": "string",
+            "required": true
         },
         "activity_done": {
             "type": "string"
         },
         "activity_type": {
-            "type": "string"
+            "type": "string",
+            "required": true
         },
         "deal_id": {
             "type": "string"
         },
         "deal_title": {
-            "type": "string",
-            "required": true
+            "type": "string"
         },
         "deal_value": {
             "type": "string"

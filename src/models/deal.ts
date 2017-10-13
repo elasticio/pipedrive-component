@@ -5,7 +5,7 @@ export interface Deal {
     title: string;
     value: number;
     currency: string;
-    user_id: string;
+    user_id: number;
     person_id: number;
     org_id: number;
     stage_id: number;
@@ -14,6 +14,3 @@ export interface Deal {
     visible_to: Visibility;
     add_time: string;
 }
-
-
-

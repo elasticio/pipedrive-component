@@ -1,53 +1,24 @@
 import { isUndefined } from "lodash";
-import * as util from "util";
 
 import { Deal } from "../models/deal";
-import { Status } from "../models/enums";
-import { Note } from "../models/note";
-import { Organization } from "../models/organization";
-import { Person } from "../models/person";
+import { Status, Visibility } from "../models/enums";
+import { PipedriveMessage } from '../models/pipedriveMessage';
+import { ComponentConfig } from "../models/componentConfig";
 
 import { APIClient } from "../apiclient";
 
 exports.process = createDeal;
 
-export interface CreateDealConfig {
-    token: string;
-    company_domain: string;
-}
-
-export interface CreateDealInMessage {
-    contact_name: string;
-    contact_email: string;
-    contact_phone: string;
-    role: string;
-    company: string;
-    company_size: string;
-    message: string;
-}
-
-export interface CreateDealOutMessage {
-    deal_id: number;
-    contact_name: string;
-    contact_email: string;
-    contact_phone: string;
-    role: string;
-    company: string;
-    company_size: string;
-    message: string;
-}
-
 /**
- * createDeal creates a new deal. It will also create a contact person,
- * an organisation and a note.
+ * createDeal creates a new deal.
  *
  * @param msg incoming messages which is empty for triggers
  * @param cfg object to retrieve triggers configuration values
  * @param snapshot the scratchpad for persitence between execution runs
- * 
+ *
  * @returns promise resolving a message to be emitted to the platform
  */
-export async function createDeal(msg: elasticionode.Message, cfg: CreateDealConfig, snapshot: any): Promise<CreateDealOutMessage> {
+export async function createDeal(msg: elasticionode.Message, cfg: ComponentConfig, snapshot: any): Promise<PipedriveMessage> {
     console.log("Msg content:");
     console.log(msg);
     console.log("Cfg content:");
@@ -55,6 +26,8 @@ export async function createDeal(msg: elasticionode.Message, cfg: CreateDealConf
     console.log("snapshot content:");
     console.log(snapshot);
 
+    // Get the input data
+    let data = <PipedriveMessage>msg.body;
     // Generate the config for https request
     if (isUndefined(cfg)) {
         throw new Error("cfg is undefined");
@@ -62,8 +35,8 @@ export async function createDeal(msg: elasticionode.Message, cfg: CreateDealConf
     if (isUndefined(cfg.token)) {
         throw new Error("API token is undefined");
     }
-    if (isUndefined(cfg.token)) {
-        throw new Error("API token is undefined");
+    if (isUndefined(cfg.company_domain)) {
+        throw new Error("Company domain is undefined");
     }
 
     // Client init
@@ -71,63 +44,48 @@ export async function createDeal(msg: elasticionode.Message, cfg: CreateDealConf
     cfg.company_domain = cfg.company_domain.trim();
     let client = new APIClient(cfg.company_domain, cfg.token);
 
-    // Get the input data
-    let data = <CreateDealInMessage>msg.body;
-
-    // Create Organization
-    console.log("Creating organization: " + data.company);
-    let organization = {
-        name: data.company,
-    } as Organization;
-    organization = await client.createOrganization(organization);
-    console.log("Created organization: " + organization.name);
-
-    // Create Person
-    console.log("Creating person: " + data.contact_name);
-    let person = {
-        name: data.contact_name,
-        email: new Array<string>(data.contact_email),
-        phone: new Array<string>(data.contact_phone),
-        org_id: organization.id,
-    } as Person;
-    person = await client.createPerson(person);
-    console.log("Created person: " + person.name);
-
     // Create Deal
-    console.log("Creating deal: ");
     let deal = {
-        title: "Website: " + data.company,
-        person_id: person.id,
-        org_id: organization.id,
-        status: Status.Open,
+        title: data.deal_title,
+        currency: data.deal_currency,
+        person_id: data.person_id,
+        org_id: data.org_id,
+        user_id: data.owner_id,
+        add_time: data.deal_add_time,
+        lost_reason: data.deal_lost_reason,
+        stage_id: data.deal_stage_id,
+        value: data.deal_value,
+
     } as Deal;
+
+    // Set visibility enum, API allows it to be omitted
+    switch (data.deal_visible_to) {
+        case 1:
+            deal.visible_to = Visibility.OwnerAndFollowers;
+            break;
+        case 2:
+            deal.visible_to = Visibility.EntireCompany;
+            break;
+    }
+
+    // Set status enum, API allows it to be omitted
+    switch (data.deal_status) {
+        case "Open":
+            deal.status = Status.Open;
+            break;
+        case "Won":
+            deal.status = Status.Won;
+            break;
+        case "Lost":
+            deal.status = Status.Lost;
+            break;
+    }
+    console.log("Creating deal: " + JSON.stringify(deal));
     deal = await client.createDeal(deal);
-    console.log("Created deal: " + deal.title);
-
-    // Create Note
-    console.log("Creating note: ");
-    let note = {
-        deal_id: deal.id,
-        content: util.format(`
-        Deal generated by the website:
-
-        Lead"s name: %s
-        Contact email: %s
-        Contact phone number: %s
-        Role: %s
-        Company: %s
-        Size of the company: %s
-        
-        Submitted message:
-        %s
-        `, data.contact_name, data.contact_email, data.contact_phone, data.role, data.company, data.company_size, data.message),
-    } as Note;
-    note = await client.createNote(note);
-    console.log("Created note for deal_id : " + note.deal_id);
+    console.log("Created deal: " + JSON.stringify(deal));
 
     // Return message
-    let ret = <CreateDealOutMessage>data;
+    let ret = <PipedriveMessage>data;
     ret.deal_id = deal.id;
     return ret;
 }
-
