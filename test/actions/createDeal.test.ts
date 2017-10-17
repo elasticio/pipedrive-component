@@ -18,6 +18,7 @@ import { APIClient, APIResult } from '../../src/apiclient';
 import { Activity } from '../../src/models/activity';
 import { ComponentConfig } from '../../src/models/componentConfig';
 import { PipedriveMessage } from '../../src/models/pipedriveMessage';
+import { CustomField } from "../../src/models/customField";
 
 describe("Create a deal and all subitems", () => {
     let message = messages.newEmptyMessage();
@@ -34,6 +35,7 @@ describe("Create a deal and all subitems", () => {
         person_name: 'Gordon Freeman',
         person_email: ['gordon.freeman@blackmesa.com'],
         person_phone: ['+01 2516/819813'],
+        custom_fields: [{ hash_key: "c1d52d051ba03888f84b63adabbea2698db493d1", value: "Labrat" } as CustomField]
     };
     message.body = data as PipedriveMessage;
 

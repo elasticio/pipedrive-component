@@ -65,6 +65,11 @@ export async function createPerson(msg: elasticionode.Message, cfg: ComponentCon
             person.visible_to = Visibility.EntireCompany;
             break;
     }
+
+    // This will read hashes and values from custom_fields array and insert into person object
+    for (let key in data.custom_fields) {
+        person[data.custom_fields[key].hash_key] = data.custom_fields[key].value;
+    }
     console.log("Creating person: " + JSON.stringify(person));
     person = await client.createPerson(person);
     console.log("Created person: " + JSON.stringify(person));

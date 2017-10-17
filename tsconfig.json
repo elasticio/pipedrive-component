@@ -10,7 +10,6 @@
         "sourceMap": true,
         "typeRoots": ["node_modules/@types", "./typings"],
         "noFallthroughCasesInSwitch": true,
-        "noImplicitAny": true,
         "strictNullChecks": true,
         "noImplicitReturns": true,
         "noImplicitThis": false,
