@@ -82,20 +82,6 @@
         },
         "owner_id": {
             "type": "string"
-        },
-        "custom_fields": {
-            "type": "array",
-            "properties": {
-                "hash_key": {
-                    "type": "string",
-                    "required": true
-                },
-                "value": {
-                    "type": "string",
-                    "required": true
-                }
-            }
-
         }
     }
 }
