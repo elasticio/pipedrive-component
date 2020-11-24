@@ -47,7 +47,7 @@ export class APIClient {
         const response = await this.http.post('/' + endpointName, payload, { responseType: 'json' });
         const result = <APIResult>response.data;
         if (!result.success) {
-            throw new Error('could not entity for endpoint ' + endpointName);
+            throw new Error('Could not entity for provided endpoint');
         }
         return <T>result.data;
     }

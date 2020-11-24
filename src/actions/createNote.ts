@@ -13,18 +13,11 @@ exports.process = createNote;
  *
  * @param msg incoming messages which is empty for triggers
  * @param cfg object to retrieve triggers configuration values
- * @param snapshot the scratchpad for persitence between execution runs
  *
  * @returns promise resolving a message to be emitted to the platform
  */
-export async function createNote(msg: elasticionode.Message, cfg: ComponentConfig, snapshot: any): Promise<PipedriveMessage> {
-
-    console.log("Msg content:");
-    console.log(msg);
-    console.log("Cfg content:");
-    console.log(cfg);
-    console.log("snapshot content:");
-    console.log(snapshot);
+export async function createNote(msg: elasticionode.Message, cfg: ComponentConfig): Promise<PipedriveMessage> {
+    this.logger.info("Starting create note action...");
 
     // Get the input data
     let data = <PipedriveMessage>msg.body;
@@ -53,9 +46,7 @@ export async function createNote(msg: elasticionode.Message, cfg: ComponentConfi
         deal_id: data.deal_id,
         content: data.note_content,
     } as Note;
-    console.log("Creating note: " + JSON.stringify(note));
     note = await client.createNote(note);
-    console.log("Created note for deal_id : " + JSON.stringify(note));
     // assign returned id to org_id
     let ret = <PipedriveMessage>data;
     ret.note_id = note.id;

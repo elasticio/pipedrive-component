@@ -12,19 +12,13 @@ exports.process = createOrganisation;
 /**
  * createOrganisation creates a new org.
  *
- * @param data incoming messages which is empty for triggers
+ * @param msg incoming messages which is empty for triggers
  * @param cfg object to retrieve triggers configuration values
- * @param snapshot the scratchpad for persitence between execution runs
  *
  * @returns promise resolving a message to be emitted to the platform
  */
-export async function createOrganisation(msg: elasticionode.Message, cfg: ComponentConfig, snapshot: any): Promise<PipedriveMessage> {
-    console.log("Msg content:");
-    console.log(msg);
-    console.log("Cfg content:");
-    console.log(cfg);
-    console.log("snapshot content:");
-    console.log(snapshot);
+export async function createOrganisation(msg: elasticionode.Message, cfg: ComponentConfig): Promise<PipedriveMessage> {
+    this.logger.info("Starting create organisation action...");
 
     let data = <PipedriveMessage>msg.body;
 
@@ -60,9 +54,7 @@ export async function createOrganisation(msg: elasticionode.Message, cfg: Compon
             organization.visible_to = Visibility.EntireCompany;
             break;
     }
-    console.log("Creating organization: " + JSON.stringify(organization));
     organization = await client.createOrganization(organization);
-    console.log("Created organization: " + JSON.stringify(organization));
     // assign returned id to org_id
     let ret = <PipedriveMessage>data;
     ret.org_id = organization.id;

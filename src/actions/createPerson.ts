@@ -14,18 +14,11 @@ exports.process = createPerson;
  *
  * @param msg incoming messages which is empty for triggers
  * @param cfg object to retrieve triggers configuration values
- * @param snapshot the scratchpad for persitence between execution runs
  *
  * @returns promise resolving a message to be emitted to the platform
  */
-export async function createPerson(msg: elasticionode.Message, cfg: ComponentConfig, snapshot: any): Promise<PipedriveMessage> {
-
-    console.log("Msg content:");
-    console.log(msg);
-    console.log("Cfg content:");
-    console.log(cfg);
-    console.log("snapshot content:");
-    console.log(snapshot);
+export async function createPerson(msg: elasticionode.Message, cfg: ComponentConfig): Promise<PipedriveMessage> {
+    this.logger.info("Starting create person action...");
 
     // Get the input data
     let data = <PipedriveMessage>msg.body;
@@ -65,9 +58,7 @@ export async function createPerson(msg: elasticionode.Message, cfg: ComponentCon
             person.visible_to = Visibility.EntireCompany;
             break;
     }
-    console.log("Creating person: " + JSON.stringify(person));
     person = await client.createPerson(person);
-    console.log("Created person: " + JSON.stringify(person));
     // assign returned id to org_id
     let ret = <PipedriveMessage>data;
     ret.person_id = person.id;

@@ -14,17 +14,11 @@ exports.process = createActivity;
  *
  * @param msg incoming messages which is empty for triggers
  * @param cfg object to retrieve triggers configuration values
- * @param snapshot the scratchpad for persitence between execution runs
  *
  * @returns promise resolving a message to be emitted to the platform
  */
-export async function createActivity(msg: elasticionode.Message, cfg: ComponentConfig, snapshot: any): Promise<PipedriveMessage> {
-    console.log("Msg content:");
-    console.log(msg);
-    console.log("Cfg content:");
-    console.log(cfg);
-    console.log("snapshot content:");
-    console.log(snapshot);
+export async function createActivity(msg: elasticionode.Message, cfg: ComponentConfig): Promise<PipedriveMessage> {
+    this.logger.info("Starting create activity action...");
 
     // Get the input data
     let data = <PipedriveMessage>msg.body;
@@ -56,9 +50,7 @@ export async function createActivity(msg: elasticionode.Message, cfg: ComponentC
         deal_id: data.deal_id,
     } as Activity;
 
-    console.log("Creating activity: " + JSON.stringify(activity));
     activity = await client.createActivity(activity);
-    console.log("Created activity for deal_id : " + JSON.stringify(activity));
 
     // Return message
     let ret = <PipedriveMessage>data;

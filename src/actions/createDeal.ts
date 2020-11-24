@@ -14,17 +14,11 @@ exports.process = createDeal;
  *
  * @param msg incoming messages which is empty for triggers
  * @param cfg object to retrieve triggers configuration values
- * @param snapshot the scratchpad for persitence between execution runs
  *
  * @returns promise resolving a message to be emitted to the platform
  */
-export async function createDeal(msg: elasticionode.Message, cfg: ComponentConfig, snapshot: any): Promise<PipedriveMessage> {
-    console.log("Msg content:");
-    console.log(msg);
-    console.log("Cfg content:");
-    console.log(cfg);
-    console.log("snapshot content:");
-    console.log(snapshot);
+export async function createDeal(msg: elasticionode.Message, cfg: ComponentConfig): Promise<PipedriveMessage> {
+    this.logger.info("Starting create deal action...");
 
     // Get the input data
     let data = <PipedriveMessage>msg.body;
@@ -80,9 +74,7 @@ export async function createDeal(msg: elasticionode.Message, cfg: ComponentConfi
             deal.status = Status.Lost;
             break;
     }
-    console.log("Creating deal: " + JSON.stringify(deal));
     deal = await client.createDeal(deal);
-    console.log("Created deal: " + JSON.stringify(deal));
 
     // Return message
     let ret = <PipedriveMessage>data;
