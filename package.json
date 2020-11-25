@@ -12,11 +12,13 @@
         "node": "14"
     },
     "scripts": {
-        "tsc": "tsc",
+        "tsc": "rm -fr out && tsc",
         "tslint": "tslint",
         "pretest": "tslint test/*/*** src/*/***",
-        "prepare": "tsc --listEmittedFiles",
-        "test": "jest"
+        "preparepublish": "npm run tsc",
+        "prepublishOnly": "tsc -p ./ --outDir lib/",
+        "test": "jest",
+        "posttest": "npm run tsc"
     },
     "jest": {
         "setupFiles": [
