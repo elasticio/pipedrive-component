@@ -1,33 +1,26 @@
 {
     "compilerOptions": {
+        "target": "es2018",
         "module": "commonjs",
-        "moduleResolution": "node",
-        "target": "es2017",
-        "outDir": "lib",
+        "allowJs": false,
+        "checkJs": false,
         "declaration": true,
-        "removeComments": true,
-        "preserveConstEnums": true,
+        "declarationMap": true,
         "sourceMap": true,
-        "typeRoots": ["node_modules/@types", "./typings"],
-        "noFallthroughCasesInSwitch": true,
-        "noImplicitAny": true,
+        "outDir": "./out",
+        "strict": true,
+        "noImplicitAny": false,
         "strictNullChecks": true,
-        "noImplicitReturns": true,
+        "strictPropertyInitialization": true,
         "noImplicitThis": false,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "experimentalDecorators": true,
-        "plugins": [{
-            "name": "tslint-language-service"
-        }]
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true
     },
-    "include": [
-        "src/**/*"
-    ],
     "exclude": [
-        "node_modules",
-        "**/*.spec.ts",
-        "lib",
-        "specs"
+        "test/*"
     ]
 }
