@@ -13,7 +13,7 @@
     },
     "scripts": {
         "tsc": "rm -fr out && tsc",
-        "pretest": "tslint -c tslint.json --project tsconfig.json tslint test/*/*** src/*/*** --fix",
+        "pretest": "tslint -c tslint.json --project tsconfig.json tslint test/**/*.ts src/**/*.ts --fix",
         "preparepublish": "npm run tsc",
         "prepublishOnly": "tsc -p ./ --outDir src/",
         "test": "mocha test --require ts-node/register test/**/*.ts --timeout 50000",
@@ -29,7 +29,7 @@
     },
     "devDependencies": {
         "@elastic.io/component-logger": "0.0.1",
-        "@types/jest": "20.0.7",
+        "@types/jest": "26.0.15",
         "chai": "4.2.0",
         "chai-as-promised": "7.1.1",
         "mocha": "8.2.0",
