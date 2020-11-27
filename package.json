@@ -15,7 +15,7 @@
         "tsc": "rm -fr out && tsc",
         "pretest": "tslint -c tslint.json --project tsconfig.json tslint test/*/*** src/*/*** --fix",
         "preparepublish": "npm run tsc",
-        "prepublishOnly": "tsc -p ./ --outDir lib/",
+        "prepublishOnly": "tsc -p ./ --outDir src/",
         "test": "mocha test --require ts-node/register test/**/*.ts --timeout 50000",
         "posttest": "npm run tsc"
     },
