@@ -11,13 +11,16 @@
     "engines": {
         "node": "14"
     },
+    "directories": {
+        "src": "out",
+        "test": "test"
+    },
     "scripts": {
         "tsc": "rm -fr out && tsc",
         "pretest": "tslint -c tslint.json --project tsconfig.json tslint test/**/*.ts src/**/*.ts --fix",
         "preparepublish": "npm run tsc",
-        "prepublishOnly": "tsc -p ./ --outDir src/",
-        "test": "mocha test --require ts-node/register test/**/*.ts --timeout 50000",
-        "posttest": "npm run tsc"
+        "posttest": "npm run tsc",
+        "test": "mocha test --require ts-node/register test/**/*.ts --timeout 50000"
     },
     "dependencies": {
         "@types/node": "14.14.3",
