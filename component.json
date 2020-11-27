@@ -1,6 +1,7 @@
 {
     "title": "Pipedrive",
     "description": "elastic.io integration component for pipedrive",
+    "buildType": "docker",
     "docsUrl": "https://www.mvise.de",
     "credentials": {
         "fields": {
