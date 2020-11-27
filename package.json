@@ -1,6 +1,6 @@
 {
     "name": "pipedrive-component",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "pipedrive component",
     "homepage": "https://www.pipedrive.org/",
     "author": {
@@ -9,50 +9,36 @@
         "url": "https://www.mvise.de"
     },
     "engines": {
-        "node": "^8.3.0",
-        "npm": ">=5.4"
+        "node": "14"
+    },
+    "directories": {
+        "src": "out",
+        "test": "test"
     },
     "scripts": {
-        "tsc": "tsc",
-        "tslint": "tslint",
-        "pretest": "tslint test/*/*** src/*/***",
-        "prepare": "tsc --listEmittedFiles",
-        "test": "jest"
-    },
-    "jest": {
-        "setupFiles": [
-            "<rootDir>/testSetupFile.js"
-        ],
-        "testEnvironment": "node",
-        "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js"
-        ],
-        "transform": {
-            "^.+\\.(ts|tsx)$": "<rootDir>/preprocessor.js"
-        },
-        "testMatch": [
-            "<rootDir>/test/**/*.(ts|tsx|js)"
-        ]
+        "tsc": "rm -fr out && tsc",
+        "pretest": "tslint -c tslint.json --project tsconfig.json tslint test/**/*.ts src/**/*.ts --fix",
+        "preparepublish": "npm run tsc",
+        "posttest": "npm run tsc",
+        "test": "mocha test --require ts-node/register test/**/*.ts --timeout 50000"
     },
     "dependencies": {
-        "axios": "^0.16.2",
-        "elasticio-node": "0.0.8",
-        "elasticio-sailor-nodejs": "^2.1.3",
-        "lodash": "^4.17.4",
-        "typescript": "^2.4.0"
+        "@types/node": "14.14.3",
+        "axios": "0.21.0",
+        "elasticio-node": "0.0.9",
+        "elasticio-sailor-nodejs": "2.6.19",
+        "lodash": "4.17.20",
+        "typescript": "4.0.3"
     },
     "devDependencies": {
-        "@types/fs-extra": "^4.0.0",
-        "@types/jest": "^20.0.7",
-        "@types/lodash": "^4.14.66",
-        "@types/nock": "^8.2.1",
-        "@types/node": "^8.0.22",
-        "fs-extra": "^4.0.1",
-        "jest": "^20.0.4",
-        "nock": "^9.0.13",
-        "tslint": "^5.4.3",
-        "tslint-language-service": "^0.9.6"
+        "@elastic.io/component-logger": "0.0.1",
+        "@types/jest": "26.0.15",
+        "chai": "4.2.0",
+        "chai-as-promised": "7.1.1",
+        "mocha": "8.2.0",
+        "sinon": "9.2.0",
+        "ts-node": "9.0.0",
+        "tslint": "6.1.3",
+        "tslint-config-airbnb": "5.11.2"
     }
 }
