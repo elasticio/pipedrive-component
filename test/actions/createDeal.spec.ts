@@ -45,12 +45,15 @@ describe('Create a deal and all subitems', () => {
     deal_note: 'Just a simple note.',
   } as ComponentConfig;
 
-  let self: { emit: any; logger: any; };
+  let emit: any;
+
+  let self;
 
   beforeEach(() => {
+    emit = sinon.spy();
     self = {
       logger,
-      emit: sinon.spy(),
+      emit,
     };
   });
 
@@ -100,7 +103,8 @@ describe('Create a deal and all subitems', () => {
       new Promise(resolve => resolve(organization)),
     );
 
-    const result = await createOrganisation.call(self, message, config);
+    await createOrganisation.call(self, message, config);
+    const result = emit.getCall(0).args[1].body;
     expect(result).to.be.deep.equal(message.body);
   });
 
@@ -109,7 +113,8 @@ describe('Create a deal and all subitems', () => {
         new Promise(resolve => resolve(person)),
     );
 
-    const result = await createPerson.call(self, message, config);
+    await createPerson.call(self, message, config);
+    const result = emit.getCall(0).args[1].body;
     expect(result).to.be.deep.equal(message.body);
   });
 
@@ -118,7 +123,8 @@ describe('Create a deal and all subitems', () => {
         new Promise(resolve => resolve(deal)),
     );
 
-    const result = await createDeal.call(self, message, config);
+    await createDeal.call(self, message, config);
+    const result = emit.getCall(0).args[1].body;
     expect(result).to.be.deep.equal(message.body);
   });
 
@@ -127,7 +133,8 @@ describe('Create a deal and all subitems', () => {
         new Promise(resolve => resolve(activity)),
     );
 
-    const result = await createActivity.call(self, message, config);
+    await createActivity.call(self, message, config);
+    const result = emit.getCall(0).args[1].body;
     expect(result).to.be.deep.equal(message.body);
   });
 
@@ -136,7 +143,8 @@ describe('Create a deal and all subitems', () => {
         new Promise(resolve => resolve(note)),
     );
 
-    const result = await createNote.call(self, message, config);
+    await createNote.call(self, message, config);
+    const result = emit.getCall(0).args[1].body;
     expect(result).to.be.deep.equal(message.body);
   });
 });

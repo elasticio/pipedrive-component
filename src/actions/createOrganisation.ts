@@ -1,4 +1,5 @@
 import { isUndefined } from 'lodash';
+const { messages } = require('elasticio-node');
 
 import { Visibility } from '../models/enums';
 import { Organization } from '../models/organization';
@@ -17,7 +18,7 @@ exports.process = createOrganisation;
  *
  * @returns promise resolving a message to be emitted to the platform
  */
-export async function createOrganisation(msg: any, cfg: ComponentConfig): Promise<PipedriveMessage> {
+export async function createOrganisation(msg: any, cfg: ComponentConfig) {
   this.logger.info('Starting create organisation action...');
 
   const data = <PipedriveMessage>msg.body;
@@ -58,5 +59,5 @@ export async function createOrganisation(msg: any, cfg: ComponentConfig): Promis
   // assign returned id to org_id
   const ret = <PipedriveMessage>data;
   ret.org_id = organization.id;
-  return ret;
+  await this.emit('data', messages.newMessageWithBody(ret));
 }

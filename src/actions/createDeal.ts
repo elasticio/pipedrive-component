@@ -1,4 +1,5 @@
 import { isUndefined } from 'lodash';
+const { messages } = require('elasticio-node');
 
 import { Deal } from '../models/deal';
 import { Status, Visibility } from '../models/enums';
@@ -17,7 +18,7 @@ exports.process = createDeal;
  *
  * @returns promise resolving a message to be emitted to the platform
  */
-export async function createDeal(msg: any, cfg: ComponentConfig): Promise<PipedriveMessage> {
+export async function createDeal(msg: any, cfg: ComponentConfig) {
   this.logger.info('Starting create deal action...');
 
     // Get the input data
@@ -79,5 +80,5 @@ export async function createDeal(msg: any, cfg: ComponentConfig): Promise<Pipedr
     // Return message
   const ret = <PipedriveMessage>data;
   ret.deal_id = deal.id;
-  return ret;
+  await this.emit('data', messages.newMessageWithBody(ret));
 }

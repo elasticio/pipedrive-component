@@ -1,4 +1,5 @@
 import { isUndefined } from 'lodash';
+const { messages } = require('elasticio-node');
 
 import { Visibility } from '../models/enums';
 import { Person } from '../models/person';
@@ -17,7 +18,7 @@ exports.process = createPerson;
  *
  * @returns promise resolving a message to be emitted to the platform
  */
-export async function createPerson(msg: any, cfg: ComponentConfig): Promise<PipedriveMessage> {
+export async function createPerson(msg: any, cfg: ComponentConfig) {
   this.logger.info('Starting create person action...');
 
     // Get the input data
@@ -63,5 +64,5 @@ export async function createPerson(msg: any, cfg: ComponentConfig): Promise<Pipe
   const ret = <PipedriveMessage>data;
   ret.person_id = person.id;
     // Return message
-  return ret;
+  await this.emit('data', messages.newMessageWithBody(ret));
 }

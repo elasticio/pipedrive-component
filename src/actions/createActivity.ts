@@ -1,4 +1,5 @@
 import { isUndefined } from 'lodash';
+const { messages } = require('elasticio-node');
 
 import { Done } from '../models/enums';
 import { Activity } from '../models/activity';
@@ -17,7 +18,7 @@ exports.process = createActivity;
  *
  * @returns promise resolving a message to be emitted to the platform
  */
-export async function createActivity(msg: any, cfg: ComponentConfig): Promise<PipedriveMessage> {
+export async function createActivity(msg: any, cfg: ComponentConfig) {
   this.logger.info('Starting create activity action...');
 
     // Get the input data
@@ -55,5 +56,5 @@ export async function createActivity(msg: any, cfg: ComponentConfig): Promise<Pi
     // Return message
   const ret = <PipedriveMessage>data;
   ret.activity_id = activity.id;
-  return ret;
+  await this.emit('data', messages.newMessageWithBody(ret));
 }

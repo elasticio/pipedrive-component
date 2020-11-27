@@ -1,4 +1,5 @@
 import { isUndefined } from 'lodash';
+const { messages } = require('elasticio-node');
 
 import { Note } from '../models/note';
 import { ComponentConfig } from '../models/componentConfig';
@@ -16,7 +17,7 @@ exports.process = createNote;
  *
  * @returns promise resolving a message to be emitted to the platform
  */
-export async function createNote(msg: any, cfg: ComponentConfig): Promise<PipedriveMessage> {
+export async function createNote(msg: any, cfg: ComponentConfig) {
   this.logger.info('Starting create note action...');
 
     // Get the input data
@@ -51,5 +52,5 @@ export async function createNote(msg: any, cfg: ComponentConfig): Promise<Pipedr
   const ret = <PipedriveMessage>data;
   ret.note_id = note.id;
     // Return message
-  return ret;
+  await this.emit('data', messages.newMessageWithBody(ret));
 }
