@@ -1,6 +1,6 @@
 import { Done } from './enums';
 
-export class Activity {
+export interface Activity {
   id: number;
   subject: string;
   done: Done;

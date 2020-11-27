@@ -4,7 +4,7 @@ import { Visibility, Done, Status } from '../models/enums';
 //  when owner_id not specified authenticated user is set as owner
 // from https://developers.pipedrive.com/docs/api/v1
 // If user_id is defined, it will replace owner_id for task
-export class PipedriveMessage {
+export interface PipedriveMessage {
   activity_id: number;
   activity_subject: string;
   activity_done: Done;

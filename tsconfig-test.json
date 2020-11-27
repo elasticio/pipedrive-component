@@ -13,12 +13,12 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "noImplicitThis": false,
-     "noUnusedLocals": true,
+    "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
-    }
+  }
 }
