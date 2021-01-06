@@ -24,7 +24,7 @@
     },
     "dependencies": {
         "@types/node": "14.14.3",
-        "axios": "0.21.0",
+        "axios": "0.21.1",
         "elasticio-node": "0.0.9",
         "elasticio-sailor-nodejs": "2.6.19",
         "lodash": "4.17.20",
